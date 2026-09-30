@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Promova 360 — gestão inteligente de promotoras no ponto de venda.">
+<title>Promova 360 | Gestão de Promotoras no PDV</title>
+<style>
+:root{
+  --blue:#1769ff;--blue2:#0d47c7;--navy:#0b1736;--text:#344054;
+  --muted:#667085;--light:#f5f8ff;--white:#fff;--border:#e4e7ec;
+  --green:#12b76a;--radius:22px;--shadow:0 22px 60px rgba(15,32,70,.10)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);line-height:1.6;background:#fff}
+a{text-decoration:none;color:inherit}
+button,input,textarea,select{font:inherit}
+.container{width:min(1140px,calc(100% - 32px));margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(228,231,236,.85)}
+.nav{height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:850;color:var(--navy);font-size:1.25rem}
+.logo-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--blue),#78aaff);font-weight:900}
+.btn{border:0;border-radius:12px;padding:13px 20px;font-weight:750;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 10px 25px rgba(23,105,255,.22)}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-2px)}
+.btn-light{background:#fff;color:var(--blue);border:1px solid var(--border)}
+.hero{padding:88px 0 78px;overflow:hidden;background:radial-gradient(circle at 88% 15%,rgba(23,105,255,.17),transparent 27%),linear-gradient(180deg,#f6f9ff,#fff)}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:70px}
+.badge{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;background:#eaf1ff;color:var(--blue);font-size:.8rem;font-weight:800;margin-bottom:20px}
+h1{font-size:clamp(2.55rem,5.5vw,4.7rem);line-height:1.01;letter-spacing:-.055em;color:var(--navy);max-width:720px}
+h1 span{color:var(--blue)}
+.hero p{font-size:1.08rem;color:var(--muted);margin:24px 0 29px;max-width:620px}
+.actions{display:flex;gap:11px;flex-wrap:wrap}
+.interest{display:flex;gap:10px;align-items:center;margin-top:24px;font-size:.88rem;color:var(--muted)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(18,183,106,.11)}
+.phone{width:min(365px,100%);margin:auto;border:8px solid #101828;border-radius:38px;overflow:hidden;background:#f8fafc;box-shadow:0 35px 80px rgba(16,24,40,.2)}
+.phone-head{padding:28px 21px 22px;background:linear-gradient(135deg,var(--blue),#3c84ff);color:#fff}
+.phone-head small{opacity:.8}.phone-head h3{font-size:1.35rem}
+.phone-body{padding:17px}
+.store,.task{background:#fff;border:1px solid #edf0f5;border-radius:14px;padding:14px;margin-bottom:10px}
+.store small,.task small{color:var(--muted)}
+.store strong{display:block;color:var(--navy)}
+.check{margin-top:10px;padding:9px 10px;border-radius:9px;background:#eaf1ff;color:var(--blue);font-size:.78rem;font-weight:800}
+.task{display:flex;align-items:center;gap:11px}
+.ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:#eef4ff;flex:0 0 auto}
+.task strong{display:block;color:var(--navy);font-size:.84rem}
+section{padding:86px 0}
+.heading{text-align:center;max-width:760px;margin:0 auto 44px}
+.eyebrow{font-size:.73rem;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);font-weight:850}
+h2{font-size:clamp(2rem,4vw,3.05rem);line-height:1.08;letter-spacing:-.04em;color:var(--navy);margin-top:8px}
+.heading p{color:var(--muted);margin-top:14px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{padding:27px;border:1px solid var(--border);border-radius:var(--radius);background:#fff}
+.card-icon{width:47px;height:47px;border-radius:14px;background:#eaf1ff;display:grid;place-items:center;margin-bottom:18px;font-size:1.25rem}
+.card h3{color:var(--navy);margin-bottom:7px}.card p{color:var(--muted);font-size:.92rem}
+.dark{background:var(--navy);color:#fff}
+.dark h2{color:#fff}.dark .heading p{color:#b8c1d5}.dark .eyebrow{color:#82adff}
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.feature{padding:20px;border-radius:17px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;gap:13px}
+.tick{width:34px;height:34px;border-radius:50%;background:var(--blue);display:grid;place-items:center;flex:0 0 auto;font-weight:900}
+.feature p{color:#b8c1d5;font-size:.88rem;margin-top:4px}
+.light{background:var(--light)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.step{background:#fff;border:1px solid var(--border);border-radius:18px;padding:23px}
+.num{width:35px;height:35px;border-radius:10px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:850;margin-bottom:14px}
+.step h3{color:var(--navy);font-size:1rem}.step p{font-size:.84rem;color:var(--muted);margin-top:5px}
+.month{border-radius:28px;padding:43px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;display:grid;grid-template-columns:.85fr 1.15fr;gap:42px;align-items:center}
+.month h2{color:#fff}.month p{opacity:.8;margin-top:12px}
+.month-list{display:grid;gap:10px}
+.month-item{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.08);padding:15px;border-radius:12px}
+.quote{font-size:.95rem}.person{margin-top:17px;color:var(--muted);font-size:.82rem}
+.note{text-align:center;color:var(--muted);font-size:.75rem;margin-top:16px}
+.lead{background:#f4f7fc}
+.lead-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:58px;align-items:center}
+.lead-copy p{color:var(--muted);margin:17px 0 22px}.benefit{font-weight:650;margin:9px 0}
+form{background:#fff;border-radius:24px;padding:31px;box-shadow:var(--shadow)}
+.field{margin-bottom:15px}label{display:block;color:var(--navy);font-weight:750;font-size:.82rem;margin-bottom:6px}
+input,textarea,select{width:100%;padding:12px 13px;border:1px solid var(--border);border-radius:10px;outline:none;background:#fff}
+input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(23,105,255,.08)}
+textarea{min-height:88px;resize:vertical}form .btn{width:100%}
+.privacy{text-align:center;font-size:.7rem;color:var(--muted);margin-top:11px}
+.success{display:none;margin-top:14px;padding:15px;border-radius:11px;background:#ecfdf3;color:#027a48;font-weight:750}
+footer{padding:32px 0;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem}
+.foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+@media(max-width:850px){.hero-grid,.lead-grid,.month{grid-template-columns:1fr}.cards,.steps{grid-template-columns:repeat(2,1fr)}.hero-grid{gap:50px}}
+@media(max-width:620px){section{padding:64px 0}.cards,.features,.steps{grid-template-columns:1fr}.month{padding:27px}.actions .btn{width:100%}.nav .btn{padding:10px 12px;font-size:.78rem}form{padding:22px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="logo" href="#"><span class="logo-mark">P</span>Promova 360</a>
+    <a class="btn btn-primary" href="#interesse">Quero conhecer</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="badge">● Gestão inteligente de promotoras no PDV</div>
+      <h1>Mais controle no campo. <span>Mais inteligência no PDV.</span></h1>
+      <p>Centralize presença, execução, estoque, vendas, evidências, treinamentos e informações da sua equipe de promotoras em uma única plataforma.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#interesse">Quero testar o Promova 360 →</a>
+        <a class="btn btn-light" href="#como-funciona">Ver como funciona</a>
+      </div>
+      <div class="interest"><span class="dot"></span><span><strong id="count">27</strong> profissionais já demonstraram interesse</span></div>
+    </div>
+
+    <div class="phone" aria-label="Prévia ilustrativa do aplicativo">
+      <div class="phone-head"><small>Olá, Marina 👋</small><h3>Seu PDV de hoje</h3></div>
+      <div class="phone-body">
+        <div class="store"><small>LOJA ATUAL</small><strong>Beauty Center • Loja 03</strong><div class="check">✓ Entrada registrada • 08:02</div></div>
+        <div class="task"><div class="ico">📸</div><div><strong>Foto da exposição</strong><small>Marca Aura • Linha Repair</small></div></div>
+        <div class="task"><div class="ico">📦</div><div><strong>Contagem de estoque</strong><small>6 produtos selecionados</small></div></div>
+        <div class="task"><div class="ico">▶</div><div><strong>Treinamento rápido</strong><small>Sérum Hydra • 2 min</small></div></div>
+        <div class="task"><div class="ico">💡</div><div><strong>Registrar oportunidade</strong><small>Envie uma ideia observada no PDV</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="heading"><span class="eyebrow">O DESAFIO</span><h2>Você sabe o que realmente está acontecendo no seu PDV?</h2><p>Quanto maior a operação, mais difícil é transformar a rotina das promotoras em informação confiável para a indústria.</p></div>
+    <div class="cards">
+      <article class="card"><div class="card-icon">⏱</div><h3>Controle descentralizado</h3><p>Pontos, fotos, relatórios e informações espalhados entre WhatsApp, planilhas e mensagens individuais.</p></article>
+      <article class="card"><div class="card-icon">👁</div><h3>Pouca visibilidade</h3><p>Dificuldade para acompanhar exposição, estoque, execução e presença das promotoras em cada loja.</p></article>
+      <article class="card"><div class="card-icon">📊</div><h3>Dados que chegam tarde</h3><p>A informação do campo nem sempre chega organizada e no momento certo para apoiar decisões comerciais.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="container">
+    <div class="heading"><span class="eyebrow">PROMOVA 360</span><h2>Da presença à performance. Tudo em um só lugar.</h2><p>A promotora sabe o que precisa executar. A indústria acompanha o que realmente acontece em cada PDV.</p></div>
+    <div class="features">
+      <div class="feature"><div class="tick">✓</div><div><strong>Ponto de entrada e saída</strong><p>Registro da jornada e horários da promotora por loja.</p></div></div>
+      <div class="feature"><div class="tick">✓</div><div><strong>Solicitações inteligentes</strong><p>Pedidos aleatórios de fotos e contagem de estoque baseados no produto, marca e perfil da loja.</p></div></div>
+      <div class="feature"><div class="tick">✓</div><div><strong>Vendas do dia</strong><p>No encerramento, a promotora registra quantos produtos contabilizou como vendidos naquela data.</p></div></div>
+      <div class="feature"><div class="tick">✓</div><div><strong>Treinamentos rápidos</strong><p>Cards com foto, descrição, finalidade e modo de uso dos produtos atendidos.</p></div></div>
+      <div class="feature"><div class="tick">✓</div><div><strong>Ideias e ações de loja</strong><p>O campo registra oportunidades, sugestões e ativações observadas diretamente no PDV.</p></div></div>
+      <div class="feature"><div class="tick">✓</div><div><strong>Relatório mensal em vídeo</strong><p>Uma vez por mês, o app solicita um vídeo com o panorama da loja e observações da promotora.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona" class="light">
+  <div class="container">
+    <div class="heading"><span class="eyebrow">NA ROTINA</span><h2>Do início ao fim do dia.</h2></div>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h3>Entrada</h3><p>A promotora identifica o PDV e registra seu horário de entrada.</p></div>
+      <div class="step"><div class="num">2</div><h3>Execução</h3><p>Recebe tarefas específicas das marcas, produtos e daquele tipo de loja.</p></div>
+      <div class="step"><div class="num">3</div><h3>Campo</h3><p>Envia fotos, conta estoque, consulta treinamentos e registra oportunidades.</p></div>
+      <div class="step"><div class="num">4</div><h3>Fechamento</h3><p>Informa as vendas contabilizadas no dia e registra o ponto de saída.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="month">
+      <div><span class="eyebrow" style="color:#c7d9ff">TODO DIA 1</span><h2>Fechamento mensal organizado.</h2><p>A data poderá ser configurada pela empresa contratante. Neste protótipo, o fluxo acontece no primeiro dia de cada mês.</p></div>
+      <div class="month-list">
+        <div class="month-item">✓ Confirmação/assinatura digital referente às horas do período</div>
+        <div class="month-item">✓ Aceite do termo aplicável ao uso de imagem em conteúdos do mês</div>
+        <div class="month-item">✓ Envio obrigatório do relatório mensal da loja em vídeo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light">
+  <div class="container">
+    <div class="heading"><span class="eyebrow">MULTIMARCAS</span><h2>Três marcas. Uma única operação.</h2><p>O protótipo considera uma indústria fictícia responsável por três marcas, cada uma com seus próprios produtos, treinamentos e solicitações.</p></div>
+    <div class="cards">
+      <article class="card"><div class="card-icon">A</div><h3>Marca Aura</h3><p>Treinamentos, tarefas e acompanhamento de execução específicos da marca.</p></article>
+      <article class="card"><div class="card-icon">N</div><h3>Marca Nova</h3><p>Contagens e solicitações personalizadas conforme o mix disponível em cada PDV.</p></article>
+      <article class="card"><div class="card-icon">V</div><h3>Marca Vita</h3><p>Dados independentes de estoque, execução e vendas dentro da mesma operação.</p></article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="heading"><span class="eyebrow">CENÁRIOS DE USO</span><h2>Menos informação perdida. Mais visão de campo.</h2></div>
+    <!-- Depoimentos abaixo são ILUSTRATIVOS e usados somente para o smoke test. Não representam clientes reais. -->
+    <div class="cards">
+      <article class="card"><p class="quote">“Hoje recebemos fotos, estoque e informações por vários canais. Ter tudo ligado à loja e à promotora reduziria muito o trabalho operacional.”</p><div class="person">Cenário ilustrativo • Gestão de Trade Marketing</div></article>
+      <article class="card"><p class="quote">“Abrir o aplicativo e saber exatamente o que preciso executar naquela loja deixaria minha rotina muito mais clara.”</p><div class="person">Cenário ilustrativo • Promotora de vendas</div></article>
+      <article class="card"><p class="quote">“Os dados do campo poderiam virar decisões melhores para cada marca, loja e produto.”</p><div class="person">Cenário ilustrativo • Coordenação Comercial</div></article>
+    </div>
+    <p class="note">* Cenários meramente ilustrativos utilizados para teste de conceito.</p>
+  </div>
+</section>
+
+<section id="interesse" class="lead">
+  <div class="container lead-grid">
+    <div class="lead-copy">
+      <span class="eyebrow">ACESSO ANTECIPADO</span>
+      <h2>Sua empresa trabalha com promotoras em loja?</h2>
+      <p>Estamos validando o Promova 360 com indústrias e operações de Trade Marketing. Cadastre-se para demonstrar interesse na versão piloto.</p>
+      <div class="benefit">✓ Centralize a operação de campo</div>
+      <div class="benefit">✓ Acompanhe execução, estoque e vendas</div>
+      <div class="benefit">✓ Transforme dados do PDV em informação para gestão</div>
+    </div>
+    <form id="leadForm">
+      <div class="field"><label for="name">Seu nome</label><input id="name" required placeholder="Digite seu nome"></div>
+      <div class="field"><label for="email">E-mail corporativo</label><input id="email" type="email" required placeholder="voce@empresa.com.br"></div>
+      <div class="field"><label for="company">Empresa</label><input id="company" placeholder="Nome da empresa"></div>
+      <div class="field"><label for="size">Quantas promotoras sua operação possui?</label><select id="size"><option value="">Selecione</option><option>1 a 10</option><option>11 a 30</option><option>31 a 100</option><option>Mais de 100</option></select></div>
+      <div class="field"><label for="difficulty">Qual sua maior dificuldade hoje na gestão das promotoras?</label><textarea id="difficulty" placeholder="Conte rapidamente..."></textarea></div>
+      <button class="btn btn-primary" type="submit">Quero participar do piloto →</button>
+      <p class="privacy">Seus dados serão utilizados apenas para contato relacionado ao Promova 360.</p>
+      <div class="success" id="success">✓ Obrigado! Seu interesse foi registrado. Você está na lista de acesso antecipado.</div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer><div class="container foot"><strong>Promova 360</strong><span>Gestão inteligente de promotoras no PDV.</span><span>© <span id="year"></span> Promova 360</span></div></footer>
+
+<script>
+/*
+ MVP FUMAÇA / SMOKE TEST
+ Este formulário não possui backend real.
+ Aqui entraria a integração real com banco de dados, CRM,
+ ferramenta de e-mail marketing, analytics ou API própria.
+*/
+const KEY="promova360_leads", BASE=27;
+const form=document.getElementById("leadForm"), success=document.getElementById("success"), count=document.getElementById("count");
+function leads(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return[]}}
+function update(){count.textContent=BASE+leads().length}
+form.addEventListener("submit",e=>{
+  e.preventDefault();
+  const lead={
+    name:document.getElementById("name").value.trim(),
+    email:document.getElementById("email").value.trim(),
+    company:document.getElementById("company").value.trim(),
+    teamSize:document.getElementById("size").value,
+    difficulty:document.getElementById("difficulty").value.trim(),
+    createdAt:new Date().toISOString()
+  };
+  const data=leads(); data.push(lead); localStorage.setItem(KEY,JSON.stringify(data));
+  console.log("Novo lead Promova 360:",lead);
+  /* Aqui entraria, por exemplo: fetch('/api/leads', {method:'POST', body:JSON.stringify(lead)}) */
+  form.reset(); success.style.display="block"; update();
+});
+update();
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
