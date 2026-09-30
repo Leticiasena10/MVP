@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gôndola – Controle de promotoras em loja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7fb;--surface:#fff;--ink:#0d1330;--muted:#4b5470;--brand:#1b3bd1;--brand-ink:#fff;--tag:#ffd23f;--tag-ink:#0d1330;--line:#dde1ee;
+--h:'Bricolage Grotesque',system-ui,sans-serif;--b:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0f24;--surface:#141a38;--ink:#eef0fa;--muted:#a3abc9;--brand:#6f86ff;--brand-ink:#0b0f24;--line:#262e57}}
+:root[data-theme="dark"]{--bg:#0b0f24;--surface:#141a38;--ink:#eef0fa;--muted:#a3abc9;--brand:#6f86ff;--brand-ink:#0b0f24;--line:#262e57}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--b)}
+h1,h2,h3{font-family:var(--h);line-height:1.1;margin:0 0 .5em;letter-spacing:-.02em}
+h1{font-size:clamp(2.2rem,7vw,3.9rem);font-weight:800}
+h2{font-size:clamp(1.6rem,4.5vw,2.4rem);font-weight:700}
+h3{font-size:1.1rem;font-weight:700;letter-spacing:0}
+p{margin:0 0 1em}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+section{padding:64px 0}
+.btn{display:inline-block;background:var(--brand);color:var(--brand-ink);font:700 1rem var(--b);padding:14px 26px;border-radius:10px;border:0;text-decoration:none;cursor:pointer}
+.btn:hover{filter:brightness(1.1)}
+.btn.sm{padding:9px 16px;font-size:.9rem}
+:focus-visible{outline:3px solid var(--tag);outline-offset:2px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
+.logo{font:800 1.4rem var(--h);letter-spacing:-.03em}
+.logo i{font-style:normal;background:var(--tag);color:var(--tag-ink);padding:0 7px;border-radius:4px;margin-right:4px}
+.hero .wrap{display:grid;gap:40px;align-items:center}
+.hero p.sub{font-size:1.15rem;color:var(--muted);max-width:52ch}
+.count{margin-top:22px;display:flex;align-items:center;gap:10px;font-size:.95rem;color:var(--muted)}
+.count b{color:var(--ink);font-size:1.15rem}
+.dot{width:10px;height:10px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.25)}
+/* etiqueta de gôndola */
+.shelf{background:var(--surface);border:2px solid var(--ink);border-radius:6px;overflow:hidden;max-width:400px;justify-self:center;width:100%;transform:rotate(-1.5deg);box-shadow:8px 8px 0 var(--tag)}
+.shelf .top{background:var(--tag);color:var(--tag-ink);font:800 .85rem var(--h);padding:8px 14px;display:flex;justify-content:space-between}
+.shelf ul{list-style:none;margin:0;padding:6px 14px 10px}
+.shelf li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.92rem}
+.shelf li:last-child{border:0}
+.shelf li span:last-child{font-weight:700;white-space:nowrap}
+.ok{color:#16a34a}.warn{color:#d97706}
+.grid{display:grid;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px}
+.card p{color:var(--muted);margin:0}
+.pain{border-left:6px solid var(--tag)}
+.alt{background:var(--surface);border-block:1px solid var(--line)}
+.alt .card{background:var(--bg)}
+.benefit{display:flex;gap:14px;margin-bottom:20px}
+.benefit .ic{flex:none;width:34px;height:34px;border-radius:8px;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-weight:800}
+.benefit p{margin:0;color:var(--muted)}
+.feats{margin-top:36px}
+.feats .card{padding:18px}
+.brands{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.brands span{border:1.5px solid var(--ink);border-radius:999px;padding:4px 14px;font-size:.85rem;font-weight:600}
+blockquote{margin:0}
+blockquote p{color:var(--ink)!important;margin-bottom:14px!important}
+blockquote footer{font-size:.85rem;color:var(--muted)}
+form{background:var(--surface);border:2px solid var(--ink);border-radius:10px;padding:26px;max-width:560px;margin:28px auto 0;box-shadow:8px 8px 0 var(--tag)}
+label{display:block;font-weight:600;font-size:.92rem;margin-bottom:14px}
+label small{font-weight:400;color:var(--muted)}
+input,select,textarea{display:block;width:100%;margin-top:6px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+form .btn{width:100%}
+.thanks{display:none;text-align:center;padding:20px 0}
+.thanks h3{font-size:1.5rem}
+.center{text-align:center}
+.center .lead{color:var(--muted);max-width:52ch;margin-inline:auto}
+footer.site{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem;text-align:center}
+@media(min-width:760px){.hero .wrap{grid-template-columns:1.15fr .85fr}.g3{grid-template-columns:repeat(3,1fr)}.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo"><i>G</i>Gôndola</div>
+    <a class="btn sm" href="#lista">Entrar na lista</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Saiba onde suas promotoras estão e o que estão vendendo, todos os dias.</h1>
+      <p class="sub">Gôndola é o app que indústrias usam para controlar ponto, fotos, estoque, vendas e relatórios de quem atende suas marcas no PDV. Tudo em um só lugar, na tela da promotora.</p>
+      <a class="btn" href="#lista">Quero acesso antecipado</a>
+      <div class="count"><span class="dot"></span><span><b id="counter">0</b> gestores já demonstraram interesse</span></div>
+    </div>
+    <!-- Mock visual do app: dia de uma promotora -->
+    <div class="shelf" aria-hidden="true">
+      <div class="top"><span>HOJE · LOJA 0142</span><span>Marca A</span></div>
+      <ul>
+        <li><span>Entrada registrada</span><span class="ok">08:02</span></li>
+        <li><span>Foto da gôndola solicitada</span><span class="warn">pendente</span></li>
+        <li><span>Contagem de estoque: shampoo 400ml</span><span class="ok">feito</span></li>
+        <li><span>Treinamento rápido: novo lançamento</span><span>2 min</span></li>
+        <li><span>Vendas do dia</span><span>informar na saída</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>O que acontece hoje com promotoras em loja</h2>
+    <div class="grid g3" style="margin-top:24px">
+      <div class="card pain"><h3>Ponto no papel ou no WhatsApp</h3><p>Horários difíceis de conferir, fechamento de horas demorado e discussão no fim do mês.</p></div>
+      <div class="card pain"><h3>Ninguém sabe como está a loja</h3><p>Sem foto de gôndola, sem contagem de estoque e sem retorno de vendas, você decide no escuro.</p></div>
+      <div class="card pain"><h3>Papelada e treinamento soltos</h3><p>Termos de imagem, comprovantes e materiais de produto ficam espalhados e desatualizados.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap split">
+    <div>
+      <h2>Controle de ponta a ponta, sem atrito para a promotora</h2>
+      <p style="color:var(--muted)">Pensado para indústrias que atendem o varejo com mais de uma marca. Cada solicitação é configurada por produto e tipo de loja.</p>
+      <div class="brands"><span>Marca A</span><span>Marca B</span><span>Marca C</span></div>
+    </div>
+    <div>
+      <div class="benefit"><div class="ic">1</div><div><h3>Visibilidade real da loja</h3><p>Fotos e contagens de estoque pedidas em momentos aleatórios, com base no que cada loja vende.</p></div></div>
+      <div class="benefit"><div class="ic">2</div><div><h3>Ponto e vendas no mesmo registro</h3><p>Na saída, a promotora informa quantas unidades vendeu no dia. Você cruza horas e resultado.</p></div></div>
+      <div class="benefit"><div class="ic">3</div><div><h3>Documentos sem correria</h3><p>Assinatura mensal de horas quitadas e do termo de uso de imagem, direto no app.</p></div></div>
+    </div>
+  </div>
+  <div class="wrap feats">
+    <div class="grid g3">
+      <div class="card"><h3>Ponto de entrada e saída</h3><p>Horários registrados pelo app, por loja.</p></div>
+      <div class="card"><h3>Fotos e estoque sob demanda</h3><p>Solicitações aleatórias por produto e tipo de loja.</p></div>
+      <div class="card"><h3>Ideias de ação de loja</h3><p>A promotora registra o que viu funcionar no PDV.</p></div>
+      <div class="card"><h3>Treinamentos rápidos</h3><p>Ficha do produto com foto, para que serve e modo de uso.</p></div>
+      <div class="card"><h3>Fechamento mensal</h3><p>Assinatura online no dia definido (padrão: dia 1).</p></div>
+      <div class="card"><h3>Relatório da loja em vídeo</h3><p>Solicitado uma vez por mês, direto pelo celular.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <!-- ATENÇÃO: depoimentos FICTÍCIOS, ilustrativos, apenas para fins de teste de validação. Substituir por depoimentos reais quando existirem. -->
+    <h2>O que gestores de trade esperam de uma ferramenta assim</h2>
+    <p style="color:var(--muted);font-size:.85rem">Depoimentos ilustrativos, criados para este teste.</p>
+    <div class="grid g3" style="margin-top:20px">
+      <div class="card"><blockquote><p>Hoje fecho as horas de 40 promotoras em planilha. Ter ponto e assinatura no mesmo lugar já me economizaria dias.</p><footer>Camila R., coordenadora de trade marketing</footer></blockquote></div>
+      <div class="card"><blockquote><p>Preciso ver a gôndola sem depender de visita do supervisor. Foto aleatória durante o dia resolve isso.</p><footer>Marcos T., gerente comercial</footer></blockquote></div>
+      <div class="card"><blockquote><p>Treinamento curto com foto do produto no celular é o que a equipe realmente abre e usa.</p><footer>Fernanda L., analista de trade</footer></blockquote></div>
+    </div>
+  </div>
+</section>
+
+<section id="lista">
+  <div class="wrap center">
+    <h2>Entre na lista de espera</h2>
+    <p class="lead">Estamos definindo as primeiras empresas que testarão o Gôndola. Deixe seus dados e falaremos com você.</p>
+    <form id="leadForm" novalidate>
+      <div id="fields">
+        <label>Seu nome<input name="nome" required autocomplete="name"></label>
+        <label>E-mail corporativo<input name="email" type="email" required autocomplete="email"></label>
+        <label>Empresa<input name="empresa" required autocomplete="organization"></label>
+        <label>Quantas promotoras você gerencia?
+          <select name="promotoras"><option>Até 10</option><option>11 a 50</option><option>51 a 200</option><option>Mais de 200</option></select>
+        </label>
+        <label>Qual sua maior dificuldade com promotoras hoje? <small>(opcional)</small><textarea name="dificuldade" rows="3"></textarea></label>
+        <button class="btn" type="submit">Entrar na lista de espera</button>
+      </div>
+      <div class="thanks" id="thanks" role="status">
+        <h3>Obrigado! Você está na lista de espera.</h3>
+        <p style="color:var(--muted);margin:0">Entraremos em contato pelo e-mail informado.</p>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="site"><div class="wrap">© 2026 Gôndola · Página de validação de ideia. O produto ainda está em desenvolvimento.</div></footer>
+
+<script>
+(function(){
+  var BASE = 127; // número inicial ilustrativo do contador
+  var KEY = 'gondola_leads';
+  function getLeads(){ try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e){ return []; } }
+  function saveLeads(a){ try { localStorage.setItem(KEY, JSON.stringify(a)); } catch(e){} }
+
+  var el = document.getElementById('counter');
+  var target = BASE + getLeads().length;
+  function animate(to){
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){ el.textContent = to; return; }
+    var start = performance.now();
+    (function step(t){
+      var p = Math.min((t - start) / 1200, 1);
+      el.textContent = Math.round(to * p);
+      if(p < 1) requestAnimationFrame(step);
+    })(start);
+  }
+  animate(target);
+
+  document.getElementById('leadForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = e.target;
+    if(!f.nome.value.trim() || !f.empresa.value.trim() || !/^\S+@\S+\.\S+$/.test(f.email.value)){
+      alert('Preencha nome, e-mail válido e empresa.');
+      return;
+    }
+    var lead = {
+      nome: f.nome.value.trim(), email: f.email.value.trim(), empresa: f.empresa.value.trim(),
+      promotoras: f.promotoras.value, dificuldade: f.dificuldade.value.trim(),
+      data: new Date().toISOString()
+    };
+    // AQUI ENTRARIA A INTEGRAÇÃO REAL: enviar `lead` para banco de dados (ex.: Supabase/Firebase)
+    // e/ou ferramenta de e-mail marketing/CRM (ex.: RD Station, Mailchimp, HubSpot).
+    console.log('Novo lead (simulado):', lead);
+    var all = getLeads(); all.push(lead); saveLeads(all);
+    // AQUI ENTRARIA o disparo de e-mail de confirmação e o evento de conversão (Meta Pixel / Google Analytics).
+    document.getElementById('fields').style.display = 'none';
+    document.getElementById('thanks').style.display = 'block';
+    el.textContent = BASE + all.length;
+  });
+})();
+</script>
+</body>
+</html>
